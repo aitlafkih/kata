@@ -1,6 +1,7 @@
 package bankaccount.kata.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -103,4 +104,16 @@ public class BankService {
 		return operationRepository.save(opeartion);
 	}
 
+    /**
+     * get all operations history in account
+     * @param accountId
+     * @return all operations for accountId
+     */
+	public List<BankOperation> operationsHistory(String accountId)  {
+		Optional<BankAccount> account = accountRepository.findById(accountId);
+		if (!account.isPresent())
+			throw new RuntimeException("Account not Found");
+		
+		return account.get().getOperations();
+	}
 }
