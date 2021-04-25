@@ -1,8 +1,12 @@
 package bankaccount.kata.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +26,9 @@ public class BankAccount {
 	
 	@Column
 	private double balance;
+	
+	@Column
+	@OneToMany(mappedBy = "account")
+    public List<BankOperation> operations = new ArrayList<>();
 
 }
