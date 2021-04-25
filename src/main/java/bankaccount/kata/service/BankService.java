@@ -70,6 +70,20 @@ public class BankService {
 	}
 	
     /**
+     * withdrawal amount from account
+     * @param accountId
+     * @param amount to withdrawal
+     * @return account information
+     */	
+	public BankAccount withdrawal(String accountId, double amount)  {
+		BankOperation operation = createOperation(accountId, OperationType.WITHDRAWAL, amount);
+		BankAccount account = accountRepository.findById(accountId).get();
+		account.getOperations().add(operation);
+		return account;
+	}
+	
+	
+    /**
      * create deposit and withdrawal operations 
      * @param accountId
      * @param type of operation (deposit/withdrawal)
@@ -80,7 +94,10 @@ public class BankService {
 		if (!optionnalAccount.isPresent())
 			throw new RuntimeException("Account not Found");
 		BankAccount account = optionnalAccount.get();
-		account.setBalance(account.getBalance() +  amount);
+		if (type.equals(OperationType.WITHDRAWAL) && account.getBalance() < amount)
+			throw new RuntimeException("Amount is greater than the account balance");
+		int operationType = type.equals(OperationType.DEPOSIT) ? 1 : -1;
+		account.setBalance(account.getBalance() + (operationType * amount));
 		BankOperation opeartion = BankOperation.builder().id(UUID.randomUUID().toString())
 				.dateOPeration(LocalDateTime.now()).operationType(type).account(account).amount(amount).build();
 		return operationRepository.save(opeartion);

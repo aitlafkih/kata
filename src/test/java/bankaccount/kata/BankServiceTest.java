@@ -59,4 +59,26 @@ public class BankServiceTest {
 		});
 	}
 
+	@Test
+	void should_create_withdrawal_operation_in_account() {
+		BankOperation operation = bankService.createOperation("account1", OperationType.WITHDRAWAL, 300);
+		Assertions.assertEquals(operation.getAmount(), 300);
+		Assertions.assertEquals(operation.getOperationType(), OperationType.WITHDRAWAL);
+		Assertions.assertEquals(operation.getAccount().getBalance(), 400);
+		Assertions.assertEquals(operation.getAccount().getId(),"account1"); 
+	}
+	
+	@Test
+	void should_throw_exception_account_not_found_when_withdrawal() {
+		Assertions.assertThrows(RuntimeException.class, () -> {
+			bankService.withdrawal("account3", 300);
+		});
+	}
+
+	@Test
+	void should_throw_exception_amount_greater_than_balance() {
+		Assertions.assertThrows(RuntimeException.class, () -> {
+			bankService.withdrawal("account1", 1200);
+		});
+	}
 }

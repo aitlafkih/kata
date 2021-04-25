@@ -26,5 +26,11 @@ public class BankController {
                         @RequestBody OperationRequest amount) throws AccountNotFoundException {
        return bankService.deposit(accountId,amount.getAmount());
     }
+	
+	@PutMapping(value = "{accountId}/withdrawal")
+    public BankAccount withdrawal(@PathVariable String accountId,
+                        @RequestBody OperationRequest amount) throws AccountNotFoundException {
+       return bankService.withdrawal(accountId,amount.getAmount());
+    }
 
 }
