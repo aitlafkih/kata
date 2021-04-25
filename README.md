@@ -23,3 +23,4 @@ swagger.json: `http://127.0.0.1:8080/v2/api-docs`
 swagger-ui: `http://127.0.0.1:8080/swagger-ui.html`
 
 swagger-ui looks like this:
+<img width="1519" alt="Capture d’écran 2021-04-25 à 20 10 28" src="https://user-images.githubusercontent.com/3882696/116004561-8ddb3c00-a603-11eb-841b-b5776a135e81.png">
